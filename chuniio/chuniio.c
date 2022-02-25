@@ -11,7 +11,7 @@ static unsigned int __stdcall chuni_io_slider_thread_proc(void *ctx);
 
 static bool chuni_io_coin;
 static uint16_t chuni_io_coins;
-static uint8_t chuni_io_hand_pos;
+//static uint8_t chuni_io_hand_pos;
 static HANDLE chuni_io_slider_thread;
 static bool chuni_io_slider_stop_flag;
 static struct chuni_io_config chuni_io_cfg;
@@ -53,6 +53,7 @@ void chuni_io_jvs_poll(uint8_t *opbtn, uint8_t *beams)
         *opbtn |= 0x02; /* Service */
     }
 
+    /*
     if (GetAsyncKeyState(chuni_io_cfg.vk_ir)) {
         if (chuni_io_hand_pos < 6) {
             chuni_io_hand_pos++;
@@ -62,9 +63,10 @@ void chuni_io_jvs_poll(uint8_t *opbtn, uint8_t *beams)
             chuni_io_hand_pos--;
         }
     }
+    */
 
     for (i = 0 ; i < 6 ; i++) {
-        if (chuni_io_hand_pos > i) {
+        if (GetAsyncKeyState(chuni_io_cfg.vk_ir[i])) {
             *beams |= (1 << i);
         }
     }
